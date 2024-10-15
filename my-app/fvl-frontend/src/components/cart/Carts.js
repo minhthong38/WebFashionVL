@@ -46,20 +46,20 @@ export default function Carts() {
             </div>
             <div className="flex items-center">
               <button
-                className="bg-green-500 text-white px-2 py-1 rounded-md mr-2"
+                className="bg-blue-500 text-white px-2 py-1 rounded-md mr-2"
                 onClick={() => handleIncrease(item.id)} // Tăng số lượng
               >
                 +
               </button>
               <span>{item.quantity}</span>
               <button
-                className="bg-red-500 text-white px-2 py-1 rounded-md ml-2"
+                className="bg-blue-500 text-white px-2 py-1 rounded-md ml-2"
                 onClick={() => handleDecrease(item.id)} // Giảm số lượng
               >
                 -
               </button>
               <button
-                className="bg-red-700 text-white px-2 py-1 rounded-md ml-2"
+                className="bg-red-700 text-white px-2 py-1 rounded-md ml-8"
                 onClick={() => handleRemove(item.id)} // Xóa sản phẩm
               >
                 Xóa

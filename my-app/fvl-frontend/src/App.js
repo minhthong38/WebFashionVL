@@ -2,7 +2,6 @@
 import Home from "./components/home/Home";
 import Menu from "./components/menu/Menu";
 import Cart from "./components/cart/Carts";
-import AboutUs from "./components/AboutUs";
 // import Sidebar from "./components/admin/Sidebar";
 import Login from "./components/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -17,10 +16,6 @@ function App() {
           <Route path="/" element={<ClientRoute children={<Home />} />} />
           <Route path="/menu" element={<ClientRoute children={<Menu />} />} />
           <Route path="/cart" element={<ClientRoute children={<Cart />} />} />
-          <Route
-            path="/AboutUs"
-            element={<ClientRoute children={<AboutUs />} />}
-          />
           <Route path="/Login" element={<ClientRoute children={<Login />} />} />
         </Routes>
       </CartProvider>
