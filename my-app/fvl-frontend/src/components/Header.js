@@ -30,7 +30,13 @@ export default function Header() {
             TRANG CHỦ
           </a>
           <a
-            href="/"
+            href="/menu"
+            className="hover:text-blue-500 transition-colors duration-300"
+          >
+            NAM
+          </a>
+          <a
+            href="/menu"
             className="hover:text-blue-500 transition-colors duration-300"
           >
             NỮ
@@ -39,9 +45,6 @@ export default function Header() {
             href="/menu"
             className="hover:text-blue-500 transition-colors duration-300"
           >
-            NAM
-          </a>
-          <a className="hover:text-blue-500 transition-colors duration-300">
             TRẺ EM
           </a>
           <a
@@ -50,7 +53,14 @@ export default function Header() {
           >
             BỘ SƯU TẬP
           </a>
+          <a
+            href="/Store"
+            className="hover:text-blue-500 transition-colors duration-300"
+          >
+            CỬA HÀNG
+          </a>
         </div>
+        
 
         <div className="absolute right-0 mr-10 flex ">
           {/* Search bar */}
