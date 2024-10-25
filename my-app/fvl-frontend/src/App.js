@@ -9,15 +9,20 @@ import Login from "./components/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import ClientRoute from "./components/routes/ClientRoute";
+import DetailProduct from './components/detail/Detailproduct';
 
 function App() {
   return (
+    // <div>
+    //       <DetailProduct />
+    // </div>
     <BrowserRouter>
       <CartProvider>
         <Routes>
           <Route path="/" element={<ClientRoute children={<Home />} />} />
           <Route path="/menu" element={<ClientRoute children={<Menu />} />} />
           <Route path="/AoThun" element={<ClientRoute children={<AoThun />} />} />
+          <Route path="/Detailproduct/:id" element={<ClientRoute children={<DetailProduct />} />} />
           <Route path="/cart" element={<ClientRoute children={<Cart />} />} />
           <Route path="/Store" element={<ClientRoute children={<Store />} />} />
           <Route path="/Login" element={<ClientRoute children={<Login />} />} />

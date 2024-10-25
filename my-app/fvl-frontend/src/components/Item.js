@@ -1,5 +1,6 @@
 import React from "react";
 import { useCart } from "../context/CartContext";
+import { Link } from "react-router-dom";
 
 export default function ItemsList(props) {
   const { addToCart } = useCart(); // Use hook from context
@@ -17,11 +18,13 @@ export default function ItemsList(props) {
       >
         <div className="relative flex-grow"> {/* Flex-grow for full image height */}
           {/* Dynamically load combo image based on ID */}
-          <img
-            src={`assets/${props.id}.jpg`} // Use id to construct image path
-            alt={props.name}
-            className="w-full h-100 object-cover rounded-t-lg" // Adjust image height
-          />
+          <Link to={`/detailproduct/${props.id}`}>
+            <img
+              src={`assets/${props.id}.jpg`}
+              alt={props.name}
+              className="w-full h-100 object-cover rounded-t-lg"
+            />
+          </Link>
           {/* Price label on top of the image */}
           <div className="absolute top-0 left-0 bg-black text-white p-2 rounded-br-lg">
             Chỉ {props.price / 1000}K
