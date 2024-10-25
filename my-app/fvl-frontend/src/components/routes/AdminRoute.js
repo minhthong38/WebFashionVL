@@ -1,26 +1,20 @@
-import React from 'react'
-import Sidebars from '../admin/Sidebar'
-import UserTable from '../admin/UserTable'
-import Banner from '../Banner'
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import React from "react";
+import Sidebars from "../admin/Sidebar";
 
-function AdminRoute(props) {
+function AdminRoute({ children }) {
   return (
-    <>
-     <div className="flex">
-  {/* Sidebar on the left */}
-  <div className="w-1/4 ">
-    <Sidebars />
-  </div>
+    <div className="flex">
+      {/* Sidebar on the left */}
+      <div className="w-1/4">
+        <Sidebars />
+      </div>
 
-  {/* UserTable on the right */}
-  <div className="w-3/4 p-4">
-    <UserTable />
-  </div>
-</div>
-
-    </>
-  )
+      {/* Content on the right */}
+      <div className="w-3/4 p-4">
+        {children} {/* Render children here */}
+      </div>
+    </div>
+  );
 }
 
-export default AdminRoute
+export default AdminRoute;
