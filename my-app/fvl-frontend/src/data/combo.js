@@ -84,5 +84,11 @@ export const categories = [
   { id: "quandai", name: "Quần Dài", link: "/category/quan-dai" },
   { id: "setquanao", name: "Set Quần Áo", link: "/category/set-quan-ao" },
 ];
+export const districtData = {
+  "Hà Nội": ["Ba Đình", "Hoàn Kiếm", "Tây Hồ", "Đống Đa"],
+  "Hồ Chí Minh": ["Quận 1", "Quận 2", "Quận 3", "Quận 4"],
+  "Đà Nẵng": ["Hải Châu", "Sơn Trà", "Ngũ Hành Sơn", "Liên Chiểu"],
+};
+
 
 

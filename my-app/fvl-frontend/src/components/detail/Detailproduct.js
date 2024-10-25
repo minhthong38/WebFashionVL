@@ -72,10 +72,10 @@ export default function DetailProduct(){
       
                 {/* Action Buttons */}
                 <div className="flex flex-col mt-4 pt-4 w-96 ">
-                  <button className="border-4 border-black text-black py-2 rounded-md hover:bg-gray-900">
-                    Mua Hàng
+                  <button className="border-4 border-black text-black py-2 rounded-md hover:bg-red-600 hover:text-white">
+                    Thêm vào giỏ hàng
                   </button>
-                  <button className=" border-4 border-red-500 text-red-500 py-2 rounded-md hover:bg-red-100 mt-5">
+                  <button className=" border-4 border-red-500 text-red-500 py-2 rounded-md hover:bg-red-500 hover:text-white mt-5">
                     Tìm Tại Cửa Hàng
                   </button>
                   <div className='flex text-base justify-center'>
