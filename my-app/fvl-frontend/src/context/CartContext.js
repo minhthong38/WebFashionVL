@@ -15,11 +15,11 @@ export function CartProvider({ children }) {
       if (itemExists) {
         // Nếu sản phẩm đã tồn tại trong giỏ, tăng số lượng
         return prevItems.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+          i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
         );
       } else {
         // Nếu sản phẩm chưa có, thêm vào với quantity = 1
-        return [...prevItems, { ...item, quantity: 1 }];
+        return [...prevItems, { ...item, quantity: item.quantity }];
       }
     });
   };

@@ -6,7 +6,14 @@ export default function ItemsList(props) {
   const { addToCart } = useCart(); // Use hook from context
 
   const handleAddToCart = () => {
-    addToCart(props); // Add product to cart
+    const product = {
+      id: props.id,
+      name: props.name,
+      price: props.price,
+      description: props.description,
+      quantity: 1, // Default quantity when adding from the list
+    };
+    addToCart(product); // Add product to cart
     alert("Đã thêm vào giỏ hàng thành công!"); // Success notification
   };
 
