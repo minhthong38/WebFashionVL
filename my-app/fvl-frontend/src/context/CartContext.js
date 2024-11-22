@@ -1,24 +1,28 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext } from "react";
 
 // Tạo Context, bộ nhớ tạm
 const CartContext = createContext();
 
 // Provider để bọc các component cần dùng cart
 export function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]); // Lưu trữ giỏ hàng với các sản phẩm và size
 
   // Hàm để thêm sản phẩm vào giỏ
   const addToCart = (item) => {
     setCartItems((prevItems) => {
-      //i.id là id của món có trong list giỏ hàng, item.id là món mới thêm vô
-      const itemExists = prevItems.find((i) => i.id === item.id);
+      const itemExists = prevItems.find(
+        (i) => i.id === item.id && i.size === item.size // Kiểm tra sản phẩm và size đã tồn tại trong giỏ
+      );
+
       if (itemExists) {
-        // Nếu sản phẩm đã tồn tại trong giỏ, tăng số lượng
+        // Nếu sản phẩm và size đã tồn tại, tăng số lượng
         return prevItems.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
+          i.id === item.id && i.size === item.size
+            ? { ...i, quantity: i.quantity + item.quantity }
+            : i
         );
       } else {
-        // Nếu sản phẩm chưa có, thêm vào với quantity = 1
+        // Nếu sản phẩm chưa có, thêm vào với quantity = 1 và size
         return [...prevItems, { ...item, quantity: item.quantity }];
       }
     });
@@ -31,7 +35,9 @@ export function CartProvider({ children }) {
 
   // Cung cấp context cho các component
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, getCartQuantity, setCartItems }}>
+    <CartContext.Provider
+      value={{ cartItems, addToCart, getCartQuantity, setCartItems }}
+    >
       {children}
     </CartContext.Provider>
   );

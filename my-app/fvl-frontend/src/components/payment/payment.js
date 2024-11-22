@@ -80,7 +80,7 @@ export default function Payment() {
   return (
     <div className="container mx-auto p-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Phần bên trái */}
+        {/* Phần bên trái - Thông tin thanh toán */}
         <div className="bg-white p-4 border rounded-md">
           <h2 className="text-xl font-bold mb-4">Thông Tin Thanh Toán</h2>
 
@@ -206,6 +206,7 @@ export default function Payment() {
           {/* Tiêu đề cho thông tin sản phẩm */}
           <div className="flex justify-between font-bold mb-2">
             <span>Tên Sản Phẩm</span>
+            <span>Size</span> {/* New column for Size */}
             <span>SL</span>
             <span>Thành Tiền</span>
           </div>
@@ -213,8 +214,11 @@ export default function Payment() {
           {cartItems.map((item) => (
             <div key={item.id} className="flex justify-between mb-2">
               <span>{item.name}</span>
+              <span>{item.size}</span> {/* Display the size of the product */}
               <span>x{item.quantity}</span>
-              <span>{(item.price * item.quantity).toLocaleString("vi-VN")}đ</span>
+              <span>
+                {(item.price * item.quantity).toLocaleString("vi-VN")}đ
+              </span>
             </div>
           ))}
 
@@ -222,7 +226,12 @@ export default function Payment() {
           {paymentMethod === "cod" && (
             <div className="flex justify-between mb-2">
               <span>Phí Ship:</span>
-              <span>{(cartItems.length > 0 ? shippingFee : 0).toLocaleString("vi-VN")}đ</span>
+              <span>
+                {(cartItems.length > 0 ? shippingFee : 0).toLocaleString(
+                  "vi-VN"
+                )}
+                đ
+              </span>
             </div>
           )}
 
