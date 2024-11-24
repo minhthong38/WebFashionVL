@@ -3,28 +3,16 @@ import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { FaTrashAlt } from "react-icons/fa";
 import { GoPencil } from "react-icons/go";
-import { getAllSanpham } from "../../services/DanhsachsanphamService"; // Nhập hàm từ dịch vụ
+import danhsachsanpham from "../../data/danhsachsanpham"; // Import dữ liệu từ danhsachsanpham.js
 
 export default function DanhsachsanphamTable() {
   const [listSanpham, setListSanpham] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Fetch sản phẩm when the component is mounted
+  // Sử dụng dữ liệu từ danhsachsanpham.js thay vì gọi API
   useEffect(() => {
-    getSanpham();
-  }, [currentPage]);
-
-  // Fetch all sản phẩm
-  const getSanpham = async () => {
-    try {
-      let res = await getAllSanpham(); // Gọi API để lấy danh sách sản phẩm
-      if (res) {
-        setListSanpham(res);
-      }
-    } catch (error) {
-      console.log("Error with fetching sản phẩm: ", error);
-    }
-  };
+    setListSanpham(danhsachsanpham); // Gán dữ liệu vào state khi component mount
+  }, []);
 
   const handlePageClick = (event) => {
     const selectedPage = event.selected + 1;
@@ -69,18 +57,21 @@ export default function DanhsachsanphamTable() {
             <tbody>
               {listSanpham.length > 0 ? (
                 listSanpham.map((sanpham, index) => (
-                  <tr key={sanpham.id} className="border-t border-gray-200">
+                  <tr
+                    key={sanpham.id_sanpham}
+                    className="border-t border-gray-200"
+                  >
                     <td className="px-6 py-4 text-sm text-gray-900">
                       {index + 1}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-900">
-                      {sanpham.id}
+                      {sanpham.id_sanpham}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-500">
-                      {sanpham.name}
+                      {sanpham.ten_sanpham}
                     </td>
                     <td className="px-6 py-4 text-right text-sm font-medium">
-                      <div className="flex float-right">
+                      <div className="flex ">
                         <GoPencil
                           className="text-xl text-yellow-400 hover:text-yellow-200 mr-5"
                           onClick={() => handleEditSanpham(sanpham)}

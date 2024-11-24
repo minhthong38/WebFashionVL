@@ -1,7 +1,7 @@
 import React from "react";
 import { IoHomeOutline } from "react-icons/io5";
-import { FaRegUser } from "react-icons/fa";
-import { MdBorderColor } from "react-icons/md";
+import { FaRegListAlt } from "react-icons/fa";
+import { MdAddBox, MdListAlt, MdCategory } from "react-icons/md";
 import { HiOutlineCog } from "react-icons/hi";
 import { GiChickenLeg } from "react-icons/gi";
 import { NavLink } from "react-router-dom";
@@ -19,7 +19,7 @@ function Sidebar() {
           Home
         </NavLink>
 
-        <h1 className="font:bold block py-2.5 px-4 rounded transition duration-200 ">
+        <h1 className="font:bold block py-2.5 px-4 rounded transition duration-200">
           Danh Mục
         </h1>
 
@@ -28,7 +28,7 @@ function Sidebar() {
           className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
           activeClassName="bg-gray-700"
         >
-          <FaRegUser className="inline-block h-5 w-5 mr-2" /> Thêm Danh Mục
+          <MdAddBox className="inline-block h-5 w-5 mr-2" /> Thêm Danh Mục
         </NavLink>
 
         <NavLink
@@ -36,10 +36,10 @@ function Sidebar() {
           className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
           activeClassName="bg-gray-700"
         >
-          <FaRegUser className="inline-block h-5 w-5 mr-2" /> Danh Sách Danh Mục
+          <MdListAlt className="inline-block h-5 w-5 mr-2" /> Danh Sách Danh Mục
         </NavLink>
 
-        <h1 className="font:bold block py-2.5 px-4 rounded transition duration-200 ">
+        <h1 className="font:bold block py-2.5 px-4 rounded transition duration-200">
           Loại Sản Phẩm
         </h1>
 
@@ -48,7 +48,7 @@ function Sidebar() {
           className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
           activeClassName="bg-gray-700"
         >
-          <GiChickenLeg className="inline-block h-5 w-5 mr-2" />
+          <MdAddBox className="inline-block h-5 w-5 mr-2" />
           Thêm Loại Sản Phẩm
         </NavLink>
 
@@ -61,7 +61,7 @@ function Sidebar() {
           Danh Sách Loại Sản Phẩm
         </NavLink>
 
-        <h1 className="font:bold block py-2.5 px-4 rounded transition duration-200 ">
+        <h1 className="font:bold block py-2.5 px-4 rounded transition duration-200">
           Sản Phẩm
         </h1>
 
@@ -70,7 +70,7 @@ function Sidebar() {
           className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
           activeClassName="bg-gray-700"
         >
-          <MdBorderColor className="inline-block h-5 w-5 mr-2" />
+          <MdAddBox className="inline-block h-5 w-5 mr-2" />
           Thêm Sản Phẩm
         </NavLink>
 
@@ -79,8 +79,17 @@ function Sidebar() {
           className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
           activeClassName="bg-gray-700"
         >
-          <HiOutlineCog className="inline-block h-5 w-5 mr-2" />
+          <MdCategory className="inline-block h-5 w-5 mr-2" />
           Danh Sách Sản Phẩm
+        </NavLink>
+
+        <NavLink
+          to="/admin/DanhsachdonhangTable"
+          className="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-700"
+          activeClassName="bg-gray-700"
+        >
+          <MdCategory className="inline-block h-5 w-5 mr-2" />
+          Danh Sách Đơn Hàng
         </NavLink>
       </nav>
     </div>

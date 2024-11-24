@@ -16,6 +16,7 @@ import DetailProduct from "./components/detail/Detailproduct";
 import DanhsachdanhmucTable from "./components/admin/DanhsachdanhmucTable";
 import DanhsachloaisanphamTable from "./components/admin/DanhsachloaisanphamTable";
 import DanhsachsanphamTable from "./components/admin/DanhsachsanphamTable";
+import DanhsachdonhangTable from "./components/admin/DanhsachdonhangTable";
 import AdminRoute from "./components/routes/AdminRoute";
 
 import DataComponent from './components/databackend/DataComponent'; //backend
@@ -40,8 +41,14 @@ function App() {
             element={<ClientRoute children={<DetailProduct />} />}
           />
           <Route path="/cart" element={<ClientRoute children={<Cart />} />} />
-          <Route path="/payment" element={<ClientRoute children={<Payment />} />} />
-          <Route path="/Confirm" element={<ClientRoute children={<Confirm />} />} />
+          <Route
+            path="/payment"
+            element={<ClientRoute children={<Payment />} />}
+          />
+          <Route
+            path="/Confirm"
+            element={<ClientRoute children={<Confirm />} />}
+          />
           <Route path="/Store" element={<ClientRoute children={<Store />} />} />
           <Route path="/Login" element={<ClientRoute children={<Login />} />} />
 
@@ -62,6 +69,11 @@ function App() {
                   <Route
                     path="DanhsachsanphamTable"
                     element={<DanhsachsanphamTable />}
+                  />
+
+                  <Route
+                    path="DanhsachdonhangTable"
+                    element={<DanhsachdonhangTable />}
                   />
 
                   <Route

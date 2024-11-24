@@ -1,29 +1,20 @@
 // src/components/admin/DanhsachloaisanphamTable.js
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { FaTrashAlt } from "react-icons/fa";
 import { GoPencil } from "react-icons/go";
-import { getAllLoaisanpham } from "../../services/DanhsachloaisanphamService"; // Đã đổi thành DanhsachloaisanphamService
+import danhSachLoaiSanPhamData from "../../data/danhsachloaisanpham"; // Import dữ liệu
 
 export default function DanhsachloaisanphamTable() {
-  const [listLoaisanpham, setListLoaisanpham] = useState([]);
+  const [listLoaisanpham, setListLoaisanpham] = useState(
+    danhSachLoaiSanPhamData
+  ); // Sử dụng dữ liệu đã import
   const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Số lượng item mỗi trang (có thể điều chỉnh)
 
-  // Fetch loại sản phẩm when the component is mounted
-  useEffect(() => {
-    getLoaisanpham();
-  }, [currentPage]);
-
-  // Fetch all loại sản phẩm
-  const getLoaisanpham = async () => {
-    try {
-      let res = await getAllLoaisanpham(); // Gọi API để lấy danh sách loại sản phẩm
-      if (res) {
-        setListLoaisanpham(res);
-      }
-    } catch (error) {
-      console.log("Error with fetching loại sản phẩm: ", error);
-    }
+  // Hàm tính toán STT dựa trên trang hiện tại
+  const getStt = (index) => {
+    return (currentPage - 1) * itemsPerPage + index + 1;
   };
 
   const handlePageClick = (event) => {
@@ -68,31 +59,39 @@ export default function DanhsachloaisanphamTable() {
             </thead>
             <tbody>
               {listLoaisanpham.length > 0 ? (
-                listLoaisanpham.map((loaisanpham, index) => (
-                  <tr key={loaisanpham.id} className="border-t border-gray-200">
-                    <td className="px-6 py-4 text-sm text-gray-900">
-                      {index + 1}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-900">
-                      {loaisanpham.id}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-gray-500">
-                      {loaisanpham.name}
-                    </td>
-                    <td className="px-6 py-4 text-right text-sm font-medium">
-                      <div className="flex float-right">
-                        <GoPencil
-                          className="text-xl text-yellow-400 hover:text-yellow-200 mr-5"
-                          onClick={() => handleEditLoaisanpham(loaisanpham)}
-                        />
-                        <FaTrashAlt
-                          className="text-xl text-red-400 hover:text-red-200"
-                          onClick={() => handleDeleteLoaisanpham(loaisanpham)}
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                ))
+                listLoaisanpham
+                  .slice(
+                    (currentPage - 1) * itemsPerPage,
+                    currentPage * itemsPerPage
+                  ) // Phân trang dữ liệu
+                  .map((loaisanpham, index) => (
+                    <tr
+                      key={loaisanpham.id}
+                      className="border-t border-gray-200"
+                    >
+                      <td className="px-6 py-4 text-sm text-gray-900">
+                        {getStt(index)} {/* Tính STT */}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-900">
+                        {loaisanpham.id}
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-500">
+                        {loaisanpham.loai_sanpham}
+                      </td>
+                      <td className="px-6 py-4 text-right text-sm font-medium">
+                        <div className="flex ">
+                          <GoPencil
+                            className="text-xl text-yellow-400 hover:text-yellow-200 mr-5"
+                            onClick={() => handleEditLoaisanpham(loaisanpham)}
+                          />
+                          <FaTrashAlt
+                            className="text-xl text-red-400 hover:text-red-200"
+                            onClick={() => handleDeleteLoaisanpham(loaisanpham)}
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  ))
               ) : (
                 <tr>
                   <td
@@ -111,7 +110,7 @@ export default function DanhsachloaisanphamTable() {
         previousLabel={<span className="text-gray-500">← Trước</span>}
         nextLabel={<span className="text-gray-500">Tiếp →</span>}
         breakLabel="..."
-        pageCount={2} // Số lượng trang đã được chỉnh lại nếu cần
+        pageCount={Math.ceil(listLoaisanpham.length / itemsPerPage)} // Tính tổng số trang
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
         onPageChange={handlePageClick}

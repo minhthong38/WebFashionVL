@@ -1,29 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import { FaTrashAlt } from "react-icons/fa";
 import { GoPencil } from "react-icons/go";
-import { getAllDanhsachdanhmuc } from "../../services/DanhsachdanhmucService"; // Đã đổi thành DanhsanhdanhmucService
+import danhMucData from "../../data/danhsachdanhmuc"; // Import dữ liệu danh mục
 
 export default function DanhsachdanhmucTable() {
-  const [listDanhsachdanhmuc, setListDanhsachdanhmuc] = useState([]);
+  const [listDanhsachdanhmuc, setListDanhsachdanhmuc] = useState(danhMucData); // Gán dữ liệu vào state
   const [currentPage, setCurrentPage] = useState(1);
-
-  // Fetch danh mục when the component is mounted
-  useEffect(() => {
-    getDanhsachdanhmuc();
-  }, [currentPage]);
-
-  // Fetch all danh mục
-  const getDanhsachdanhmuc = async () => {
-    try {
-      let res = await getAllDanhsachdanhmuc(); // Gọi API để lấy danh sách danh mục
-      if (res) {
-        setListDanhsachdanhmuc(res);
-      }
-    } catch (error) {
-      console.log("Error with fetching danh mục: ", error);
-    }
-  };
 
   const handlePageClick = (event) => {
     const selectedPage = event.selected + 1;
@@ -69,20 +52,20 @@ export default function DanhsachdanhmucTable() {
               {listDanhsachdanhmuc.length > 0 ? (
                 listDanhsachdanhmuc.map((danhmuc, index) => (
                   <tr
-                    key={danhmuc.category_id}
+                    key={danhmuc.id_danhmuc}
                     className="border-t border-gray-200"
                   >
                     <td className="px-6 py-4 text-sm text-gray-900">
                       {index + 1}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-900">
-                      {danhmuc.category_id}
+                      {danhmuc.id_danhmuc}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-500">
-                      {danhmuc.category_name}
+                      {danhmuc.ten_danhmuc}
                     </td>
                     <td className="px-6 py-4 text-right text-sm font-medium">
-                      <div className="flex float-right">
+                      <div className="flex ">
                         <GoPencil
                           className="text-xl text-yellow-400 hover:text-yellow-200 mr-5"
                           onClick={() => handleEditDanhsachdanhmuc(danhmuc)}
