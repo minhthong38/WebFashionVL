@@ -18,6 +18,8 @@ import DanhsachloaisanphamTable from "./components/admin/DanhsachloaisanphamTabl
 import DanhsachsanphamTable from "./components/admin/DanhsachsanphamTable";
 import AdminRoute from "./components/routes/AdminRoute";
 
+import DataComponent from './components/databackend/DataComponent'; //backend
+
 function App() {
   return (
     // <div>
@@ -26,6 +28,7 @@ function App() {
     <BrowserRouter>
       <CartProvider>
         <Routes>
+        <Route path="/data" element={<ClientRoute children={<DataComponent />} />} />
           <Route path="/" element={<ClientRoute children={<Home />} />} />
           <Route path="/menu" element={<ClientRoute children={<Menu />} />} />
           <Route
