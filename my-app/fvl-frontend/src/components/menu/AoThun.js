@@ -9,15 +9,18 @@ export default function AoThun() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/products"); // Gọi API
+        const response = await axios.get("http://localhost:5000/api/products");
+        console.log(response.data); // Log before filtering to see all products
         const filteredProducts = response.data.filter(
-          (item) => item.cartegory_id === categoryId
-        ); // Lọc sản phẩm theo category_id
+          (item) => item.category_id === categoryId // Corrected to category_id
+        );
+        console.log(filteredProducts); // Log after filtering to verify filtered products
         setProducts(filteredProducts);
       } catch (error) {
         console.error("Lỗi khi lấy danh sách sản phẩm:", error);
       }
     };
+    
 
     fetchProducts();
   }, []);
