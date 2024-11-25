@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
-import { districtData } from "../../data/combo"; // Import dữ liệu quận/huyện
 
 export default function Payment() {
   const navigate = useNavigate(); // Khai báo useNavigate
-  const { cartItems } = useCart(); // Lấy thông tin giỏ hàng
+  const { cartItems, clearCart } = useCart(); // Lấy thông tin giỏ hàng và clearCart
   const [isGuest, setIsGuest] = useState(false); // Kiểm tra nếu là khách lẻ
   const [paymentMethod, setPaymentMethod] = useState(""); // Phương thức thanh toán
 
@@ -13,29 +12,12 @@ export default function Payment() {
   const [customerInfo, setCustomerInfo] = useState({
     fullName: "",
     phoneNumber: "",
-    city: "",
-    district: "",
     address: "",
+    email: "",
   });
 
   const handleGuestToggle = () => {
     setIsGuest(!isGuest);
-  };
-
-  const handleCityChange = (e) => {
-    const selectedCity = e.target.value;
-    setCustomerInfo((prev) => ({
-      ...prev,
-      city: selectedCity,
-      district: "", // Reset quận/huyện khi thay đổi tỉnh/thành phố
-    }));
-  };
-
-  const handleDistrictChange = (e) => {
-    setCustomerInfo((prev) => ({
-      ...prev,
-      district: e.target.value,
-    }));
   };
 
   // Tính tổng tiền
@@ -45,19 +27,47 @@ export default function Payment() {
     0
   );
 
-  const isShippingApplicable = paymentMethod === "cod";
-
-  if (isShippingApplicable && cartItems.length > 0) {
+  // Nếu phương thức thanh toán là COD (Thanh Toán Khi Nhận Hàng), cộng phí ship
+  if (paymentMethod === "cod") {
     totalAmount += shippingFee; // Cộng phí ship vào tổng tiền
   }
+
+  const isShippingApplicable = paymentMethod === "cod";
+
+  // Hàm kiểm tra số điện thoại
+  const isValidPhoneNumber = (phoneNumber) => {
+    return /^[0-9]+$/.test(phoneNumber); // Kiểm tra chỉ có số
+  };
+
+  // Hàm kiểm tra email
+  const isValidEmail = (email) => {
+    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(email); // Kiểm tra định dạng email
+  };
+
+  // Hàm kiểm tra tên không chứa ký tự đặc biệt
+  const isValidFullName = (fullName) => {
+    return /^[a-zA-Z\s]+$/.test(fullName); // Kiểm tra chỉ chứa chữ cái và khoảng trắng
+  };
 
   const handleConfirm = () => {
     // Validate required fields
     if (isGuest) {
-      const { fullName, phoneNumber, city, district, address } = customerInfo;
-      if (!fullName || !phoneNumber || !city || !district || !address) {
+      const { fullName, phoneNumber, address, email } = customerInfo;
+      if (!fullName || !phoneNumber || !address || !email) {
         alert("Vui lòng điền đầy đủ thông tin.");
         return; // Prevent navigation
+      }
+      if (!isValidFullName(fullName)) {
+        alert("Họ và tên không được chứa ký tự đặc biệt.");
+        return;
+      }
+      if (!isValidPhoneNumber(phoneNumber)) {
+        alert("Số điện thoại phải là số.");
+        return;
+      }
+      if (!isValidEmail(email)) {
+        alert("Email không hợp lệ. Email phải có '@' và '.com'.");
+        return;
       }
     }
 
@@ -65,6 +75,9 @@ export default function Payment() {
     const orderCode =
       customerInfo.fullName.slice(0, 4).toUpperCase() +
       Math.floor(10000 + Math.random() * 90000);
+
+    // Clear the cart after confirming
+    clearCart();
 
     // Navigate to confirmation page
     navigate("/confirm", {
@@ -126,47 +139,21 @@ export default function Payment() {
                 }
                 className="border px-4 py-2 w-full mb-2"
               />
-
-              {/* Dropdown cho Tỉnh/Thành Phố */}
-              <select
-                value={customerInfo.city}
-                onChange={handleCityChange}
-                className="border px-4 py-2 w-full mb-2"
-              >
-                <option value="" disabled>
-                  Chọn Tỉnh/Thành Phố
-                </option>
-                {Object.keys(districtData).map((city) => (
-                  <option key={city} value={city}>
-                    {city}
-                  </option>
-                ))}
-              </select>
-
-              {/* Dropdown cho Quận/Huyện */}
-              <select
-                value={customerInfo.district}
-                onChange={handleDistrictChange}
-                className="border px-4 py-2 w-full mb-2"
-                disabled={!customerInfo.city} // Vô hiệu hóa nếu chưa chọn tỉnh/thành phố
-              >
-                <option value="" disabled>
-                  Chọn Quận/Huyện
-                </option>
-                {customerInfo.city &&
-                  districtData[customerInfo.city].map((district) => (
-                    <option key={district} value={district}>
-                      {district}
-                    </option>
-                  ))}
-              </select>
-
               <input
                 type="text"
                 placeholder="Địa Chỉ Cụ Thể"
                 value={customerInfo.address}
                 onChange={(e) =>
                   setCustomerInfo({ ...customerInfo, address: e.target.value })
+                }
+                className="border px-4 py-2 w-full mb-2"
+              />
+              <input
+                type="text"
+                placeholder="Email"
+                value={customerInfo.email}
+                onChange={(e) =>
+                  setCustomerInfo({ ...customerInfo, email: e.target.value })
                 }
                 className="border px-4 py-2 w-full mb-2"
               />
@@ -203,7 +190,6 @@ export default function Payment() {
         <div className="bg-white p-4 border rounded-md">
           <h2 className="text-xl font-bold mb-4">Thông Tin Giỏ Hàng</h2>
 
-          {/* Tiêu đề cho thông tin sản phẩm */}
           <div className="flex justify-between font-bold mb-2">
             <span>Tên Sản Phẩm</span>
             <span>Size</span> {/* New column for Size */}
@@ -214,24 +200,17 @@ export default function Payment() {
           {cartItems.map((item) => (
             <div key={item.id} className="flex justify-between mb-2">
               <span>{item.name}</span>
-              <span>{item.size}</span> {/* Display the size of the product */}
+              <span>{item.size}</span>
               <span>x{item.quantity}</span>
-              <span>
-                {(item.price * item.quantity).toLocaleString("vi-VN")}đ
-              </span>
+              <span>{(item.price * item.quantity).toLocaleString("vi-VN")}đ</span>
             </div>
           ))}
 
-          {/* Hiển thị phí ship nếu phương thức thanh toán là "Thanh Toán Khi Nhận Hàng" */}
-          {paymentMethod === "cod" && (
-            <div className="flex justify-between mb-2">
-              <span>Phí Ship:</span>
-              <span>
-                {(cartItems.length > 0 ? shippingFee : 0).toLocaleString(
-                  "vi-VN"
-                )}
-                đ
-              </span>
+          {/* Hiển thị phí vận chuyển nếu chọn COD */}
+          {isShippingApplicable && (
+            <div className="flex justify-between font-bold mt-2">
+              <span>Phí Vận Chuyển:</span>
+              <span>{shippingFee.toLocaleString("vi-VN")}đ</span>
             </div>
           )}
 
@@ -241,19 +220,12 @@ export default function Payment() {
             <span>{totalAmount.toLocaleString("vi-VN")}đ</span>
           </div>
 
-          {/* Nút Quay lại và Xác nhận ở dưới tổng tiền hàng */}
-          <div className="flex justify-between mt-4">
-            <Link
-              to="/cart"
-              className="bg-gray-500 text-white px-4 py-2 rounded-md"
-            >
-              ⟲ Quay Lại Giỏ Hàng
-            </Link>
+          <div className="flex justify-center mt-4">
             <button
-              onClick={handleConfirm} // Gọi hàm khi nhấn nút
-              className="bg-black hover:bg-red-600 text-white px-4 py-2 rounded-md"
+              onClick={handleConfirm}
+              className="bg-blue-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
             >
-              Xác Nhận
+              Xác Nhận Thanh Toán
             </button>
           </div>
         </div>

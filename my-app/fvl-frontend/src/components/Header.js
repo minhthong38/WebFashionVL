@@ -54,12 +54,6 @@ export default function Header() {
             BỘ SƯU TẬP
           </a>
 
-          <a
-            href="/Store"
-            className="hover:text-blue-500 transition-colors duration-300"
-          >
-            CỬA HÀNG
-          </a>
 
           <a
             href="/admin"

@@ -33,10 +33,15 @@ export function CartProvider({ children }) {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
   };
 
+  // Hàm để xóa giỏ hàng
+  const clearCart = () => {
+    setCartItems([]); // Clear cart items
+  };
+
   // Cung cấp context cho các component
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, getCartQuantity, setCartItems }}
+      value={{ cartItems, addToCart, getCartQuantity, setCartItems, clearCart }}
     >
       {children}
     </CartContext.Provider>

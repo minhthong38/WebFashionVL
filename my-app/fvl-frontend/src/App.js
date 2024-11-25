@@ -2,7 +2,6 @@
 import Home from "./components/home/Home";
 import Menu from "./components/menu/Menu";
 import Cart from "./components/cart/Carts";
-import Store from "./components/store/Store";
 import AoThun from "./components/menu/AoThun";
 import Payment from "./components/payment/payment";
 import Confirm from "./components/confirm/confirm";
@@ -49,7 +48,6 @@ function App() {
             path="/Confirm"
             element={<ClientRoute children={<Confirm />} />}
           />
-          <Route path="/Store" element={<ClientRoute children={<Store />} />} />
           <Route path="/Login" element={<ClientRoute children={<Login />} />} />
 
           {/* Admin Routes */}
